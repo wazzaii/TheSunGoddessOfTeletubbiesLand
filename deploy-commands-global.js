@@ -27,37 +27,25 @@ for (const folder of commandFolders) {
 		}
 	}
 }
-// warning message just in case I fuck things up  
-// console.log(`You're about to update the command list for every server the bot is currently in. \n Are you sure this is what you want to do (y/n)`)
-let areWeGoodBro;
-readline.question(`[WARNING] You're about to update the command list for every server the bot is currently in. \n Are you sure this is what you want to do (y/n)`, input => {
-    areWeGoodBro = input; 
-    readline.close();
-});
-
-
-if(!(areWeGoodBro == 'y')) {
-    console.log('Global deploy cancelled.')
-}else{
 // Construct and prepare an instance of the REST module
 const rest = new REST().setToken(token);
 
 // and deploy your commands!
 (async () => {
-	try {
-		console.log(`Started refreshing ${commands.length} application (/) commands.`);
+    try {
+        console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
-		// The put method is used to fully refresh all commands in EVERY
-		const data = await rest.put(
+        // The put method is used to fully refresh all commands in EVERY
+        const data = await rest.put(
             Routes.applicationCommands(clientId),
             { body: commands },
-		);
+        );
 
-		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
-	} catch (error) {
-		// And of course, make sure you catch and log any errors!
-		console.error(error);
-	}
+        console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+    } catch (error) {
+        // And of course, make sure you catch and log any errors!
+        console.error(error);
+    }
 })();
-}
+
 
